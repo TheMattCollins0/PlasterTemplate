@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest
+  schemaVersion="1.1"
+  templateType="Project" xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+  <metadata>
+    <name>ScriptModuleTemplate</name>
+    <id>a321f90b-6d49-4fdf-83b4-6c16ce2aab7e</id>
+    <version>1.0.0</version>
+    <title>ScriptModuleTemplate</title>
+    <description>Scaffolds the files required for a PowerShell script module</description>
+    <author>Matt Collins</author>
+    <tags>PowerShell, Module, ModuleManifest</tags>
+  </metadata>
+  <parameters></parameters>
+  <content></content>
+</plasterManifest>
