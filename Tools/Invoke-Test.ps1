@@ -13,6 +13,10 @@ Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -Confirm:$false
 Import-Module Pester
 Import-Module PSScriptAnalyzer
 
+# Creation of result output file variables
+$PesterResultsPath = ".\" + "Results" + "\" + "PesterResults" + ".xml"
+$PSSAResultsPath = ".\" + "Results" + "\" + "PSSAResults" + ".xml"
+
 # Run the Pester and PSScriptAnalyzer tests
-Invoke-Pester -OutputFile 'PesterResults.xml' -OutputFormat 'NUnitXml' -Script '.\Tests\ModuleImport.tests.ps1'
-Invoke-Pester -OutputFile 'PSSAResults.xml' -OutputFormat 'NUnitXml' -Script '.\Tests\PSSA.tests.ps1'
+Invoke-Pester -OutputFile $PesterResultsPath -OutputFormat 'NUnitXml' -Script '.\Tests\ModuleImport.tests.ps1'
+Invoke-Pester -OutputFile $PSSAResultsPath -OutputFormat 'NUnitXml' -Script '.\Tests\PSSA.tests.ps1'
