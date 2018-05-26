@@ -10,12 +10,12 @@ $Destination = "C:\MattDropbox\Dropbox\Scripts\GitHub\" + $ModuleName
 # Creation of the $PlasterSplat splat
 $PlasterSplat = @{
     TemplatePath    = "C:\MattDropbox\Dropbox\Scripts\GitHub\PlasterTemplate"
-    DestinationPath = $Destination
-    ModuleName      = $ModuleName
+    DestinationPath = "$Destination"
+    ModuleName      = "$ModuleName"
     FullName        = "Matt Collins"
-    ModuleDesc      = $ModuleDescription
+    ModuleDesc      = "$ModuleDescription"
     GitHubUserName  = "TheMattCollins0"
-    GitHubRepo      = $ModuleName
+    GitHubRepo      = "$ModuleName"
 }
 
 # Creation of the destination path for the new module
