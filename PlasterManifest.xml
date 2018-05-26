@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<plasterManifest
-  schemaVersion="1.1"
-  templateType="Project" xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+<plasterManifest schemaVersion="1.1" templateType="Project" 
+  xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
   <metadata>
     <name>ScriptModuleTemplate</name>
     <id>a321f90b-6d49-4fdf-83b4-6c16ce2aab7e</id>
@@ -11,6 +10,30 @@
     <author>Matt Collins</author>
     <tags>PowerShell, Module, ModuleManifest</tags>
   </metadata>
-  <parameters></parameters>
-  <content></content>
+  <parameters>
+    <parameter name="FullName" type="text" prompt="Module author's name" />
+    <parameter name="ModuleName" type="text" prompt="Name of your module" />
+    <parameter name="ModuleDesc" type="text" prompt="Brief description on this module" />
+    <parameter name="Version" type="text" prompt="Initial module version" default="0.0.1" />
+    <parameter name="GitHubUserName" type="text" prompt="GitHub username" default="${PLASTER_PARAM_FullName}"/>
+    <parameter name="GitHubRepo" type="text" prompt="Github repo name for this module" default="${PLASTER_PARAM_ModuleName}"/>
+  </parameters>
+  <content>
+    <message>
+    Creating folder structure
+    </message>
+    <file source='' destination='Docs'/>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}'/>
+    <file source='' destination='Tests'/>
+    <file source='' destination='Results'/>
+    <message>
+    Deploying common files
+    </message>
+    <file source='LICENSE.txt' destination=''/>
+    <templateFile source='readme.md' destination=''/>
+    <templateFile source='Tests\ModuleImport.Tests.ps1' destination=''/>
+    <templateFile source='Tests\PSSA.tests.ps1' destination=''/>
+    <templateFile source='Docs\ReleaseNotes.txt' destination=''/>
+
+</content>
 </plasterManifest>
