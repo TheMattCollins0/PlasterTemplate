@@ -26,14 +26,24 @@
     <file source='' destination='${PLASTER_PARAM_ModuleName}'/>
     <file source='' destination='Tests'/>
     <file source='' destination='Results'/>
+    <file source='' destination='Tools'/>
     <message>
     Deploying common files
     </message>
     <file source='LICENSE.txt' destination=''/>
     <templateFile source='readme.md' destination=''/>
+    <templateFile source='Tools\CommitVersionChange.ps1' destination=''/>
+    <templateFile source='Tools\DeployToModuleRepo.ps1' destination=''/>
+    <templateFile source='Tools\Invoke-Test.ps1' destination=''/>
+    <templateFile source='Tools\ManifestUpdate.ps1' destination=''/>
     <templateFile source='Tests\ModuleImport.Tests.ps1' destination=''/>
     <templateFile source='Tests\PSSA.tests.ps1' destination=''/>
     <templateFile source='Docs\ReleaseNotes.txt' destination=''/>
-
-</content>
-</plasterManifest>
+    <file source='module.psm1' destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psm1'/>
+    <message>
+    Creating Module Manifest
+    </message>
+    <newModuleManifest
+    Destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psd1' ModuleVersion='$PLASTER_PARAM_Version' RootModule='${PLASTER_PARAM_ModuleName}.psm1' Author='$PLASTER_PARAM_FullName' Description='$PLASTER_PARAM_ModuleDesc' Encoding='UTF8-NoBOM'/>
+    </content>
+    </plasterManifest>
