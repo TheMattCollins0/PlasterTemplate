@@ -10,17 +10,20 @@ $Destination = "C:\MattDropbox\Dropbox\Scripts\GitHub\" + $ModuleName
 # Creation of the $PlasterSplat splat
 $PlasterSplat = @{
     TemplatePath    = "C:\MattDropbox\Dropbox\Scripts\GitHub\PlasterTemplate"
-    DestinationPath = "$Destination"
-    ModuleName      = "$ModuleName"
     FullName        = "Matt Collins"
-    ModuleDesc      = "$ModuleDescription"
-    GitHubUserName  = "TheMattCollins0"
-    GitHubRepo      = "$ModuleName"
+    DestinationPath = $Destination
+    Version         = "0.0.1"
+    ModuleName      = $ModuleName
+    ModuleDesc      = $ModuleDescription
 }
 
 # Creation of the destination path for the new module
-If (!(Test-Path $PlasterSplat.DestinationPath)) {
+If (!(Test-Path $Destination)) {
     New-Item -ItemType Directory -Path $Destination | Out-Null
 }
 
-Invoke-Plaster @PlasterSplat -Verbose
+# Invoke Plaster using the supplied splat
+Invoke-Plaster @PlasterSplat
+
+# Change location to the newly created module directory
+Set-Location $Destination
