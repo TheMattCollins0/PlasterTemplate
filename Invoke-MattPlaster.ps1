@@ -25,24 +25,28 @@ function Invoke-MattPlaster {
 
     [CmdletBinding()]
     param (
-        [Parameter( Mandatory = $false )]
-        [Alias( 'UserName' )]
-        [string[]]
+        [Parameter(Mandatory = $false)]
+        [Alias('UserName')]
+        [string]
         $GitHubUserName = "TheMattCollins0",
 
-        [Parameter( Mandatory = $false )]
-        [Alias( 'Path' )]
-        [string[]]
+        [Parameter(Mandatory = $false)]
+        [Alias('Path')]
+        [string]
         $GitHubPath = "C:\GitHub",
 
-        [Parameter( Mandatory = $true, ValueFromPipeline = $true, HelpMessage = "Please enter the name of the new module" )]
-        [Alias( 'Name' )]
-        [string[]]
+        [Parameter(Mandatory = $true, HelpMessage = "Please enter the name of the new module",
+            ValueFromPipeline = $true)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('Name')]
+        [string]
         $ModuleName,
 
-        [Parameter( Mandatory = $true, ValueFromPipeline = $true, HelpMessage = "Please provide a description for the module" )]
-        [Alias( 'Description' )]
-        [string[]]
+        [Parameter(Mandatory = $true, HelpMessage = "Please provide a description for the module",
+            ValueFromPipeline = $true)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('Description')]
+        [string]
         $ModuleDescription
     )
     
@@ -87,7 +91,7 @@ function Invoke-MattPlaster {
     $Private = new-Object System.Management.Automation.Host.ChoiceDescription "p&Rivate", "Private"
     $RepositoryVisibilityChoices = [System.Management.Automation.Host.ChoiceDescription[]]($Public, $Private)
     $RepositoryVisibility = $host.ui.PromptForChoice( $RepositoryVisibilityCaption, $RepositoryVisibilityMessage, $RepositoryVisibilityChoices, 1 )
-
+    Write-Output ""
     switch ( $RepositoryVisibility ) {
         0 { "You entered Public"; break }
         1 { "You entered Private"; break }
@@ -100,11 +104,14 @@ function Invoke-MattPlaster {
     $No = new-Object System.Management.Automation.Host.ChoiceDescription "&No", "No"
     $DevelopmentBranchChoices = [System.Management.Automation.Host.ChoiceDescription[]]($Yes, $No)
     $DevelopmentBranch = $host.ui.PromptForChoice( $DevelopmentBranchCaption, $DevelopmentBranchMessage, $DevelopmentBranchChoices, 0 )
-
+    Write-Output ""
     switch ( $DevelopmentBranch ) {
         0 { "A development branch is required"; break }
         1 { "A development branch is not required"; break }
     }
+
+    # Set current location to the path supplied in $GitHubPath
+    Set-Location -Path $GitHubPath | Out-Null
 
     # Creation of the destination path
     $Destination = "C:\GitHub\" + $ModuleName
@@ -122,32 +129,38 @@ function Invoke-MattPlaster {
     # If statement to check if a Public repository was requested
     if ( $RepositoryVisibility -eq "0" ) {
         # Create the new public repository on GitHub
-        Write-Information "Creating the $ModuleName GitHub repository and marking it as public"
-        Write-Information "This will not take long"
+        Write-Output "Creating the $ModuleName GitHub repository and marking it as public"
+        Write-Output "This will not take long"
         New-GitHubRepository -Name $ModuleName -Description $ModuleDescription
     }
 
     # If statement to check if a Private repository was requested
     if ( $RepositoryVisibility -eq "1" ) {
         # Create a new private repository on GitHub
-        Write-Information "Creating the $ModuleName GitHub repository and marking it as private"
-        Write-Information "This will not take long"
-        New-GitHubRepository -Name $ModuleName -Description $ModuleDescription -Private
+        Write-Output "Creating the $ModuleName GitHub repository and marking it as private"
+        Write-Output "This will not take long"
+        New-GitHubRepository -Name $ModuleName -Description $ModuleDescription -Private $True
     }
 
     # Creation of the GitHub repository URL variable
-    $GitHubRepository = "https://github.com/" + $GitHubUsername + "/" + $ModuleName
+    $GitHubRepository = "https://github.com/" + $GitHubUsername + "/" + $ModuleName + ".git"
 
     # Clone the GitHub repository to the local computer to the GitHub directory
     git clone $GitHubRepository
 
+    # Initialise the GitHub repository
+    git init
+
+    # Add the GitHub remote
+    git remote add origin $GitHubRepository
+
     # Invoke Plaster using the supplied splat
-    Write-Information "Creating the new module file structure using Plaster"
-    Write-Information "This will not take long"
+    Write-Output "Creating the new module file structure using Plaster"
+    Write-Output "This will not take long"
     Invoke-Plaster @PlasterSplat
 
     # Change location to the newly created module directory
-    Set-Location $Destination
+    Set-Location $Destination | Out-Null
 
     # Stage the changes made to the repository by Plaster ready to commit them
     git add --all
@@ -161,8 +174,8 @@ function Invoke-MattPlaster {
     # If statement to check if a development branch of the repository was requested
     if ( $DevelopmentBranch -eq "0" ) {
         # Create a development brach of the GitHub repository then check it out
-        Write-Information "Creating a development branch of the $ModuleName repository"
-        Write-Information "This will not take long"
+        Write-Output "Creating a development branch of the $ModuleName repository"
+        Write-Output "This will not take long"
     
         # Create the development branch
         git branch development
