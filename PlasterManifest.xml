@@ -32,7 +32,7 @@
 <templateFile source='readme.md' destination=''/>
 <templateFile source='Tools\CommitVersionChange.ps1' destination=''/>
 <templateFile source='Tools\DeployToModuleRepo.ps1' destination=''/>
-<templateFile source='Tools\Invoke-Test.ps1' destination=''/>
+<templateFile source='Tools\Invoke-Build.ps1' destination=''/>
 <templateFile source='Tools\ManifestUpdate.ps1' destination=''/>
 <templateFile source='Tests\ModuleImport.Tests.ps1' destination=''/>
 <templateFile source='Tests\PSSA.tests.ps1' destination=''/>
