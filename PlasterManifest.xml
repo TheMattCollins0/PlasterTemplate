@@ -36,7 +36,6 @@
 <templateFile source='Tools\ManifestUpdate.ps1' destination=''/>
 <templateFile source='Tests\ModuleImport.Tests.ps1' destination=''/>
 <templateFile source='Tests\PSSA.tests.ps1' destination=''/>
-<templateFile source='Docs\ReleaseNotes.txt' destination=''/>
 <file source='module.psm1' destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psm1'/>
 <message>
 		Creating Module Manifest
