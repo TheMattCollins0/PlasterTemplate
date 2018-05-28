@@ -35,12 +35,12 @@ function Invoke-MattPlaster {
         [string[]]
         $GitHubPath = "C:\GitHub",
 
-        [Parameter( Mandatory = $true, HelpMessage = "Please enter the name of the new module" )]
+        [Parameter( Mandatory = $true, ValueFromPipeline = $true, HelpMessage = "Please enter the name of the new module" )]
         [Alias( 'Name' )]
         [string[]]
         $ModuleName,
 
-        [Parameter( Mandatory = $true, HelpMessage = "Please provide a description for the module" )]
+        [Parameter( Mandatory = $true, ValueFromPipeline = $true, HelpMessage = "Please provide a description for the module" )]
         [Alias( 'Description' )]
         [string[]]
         $ModuleDescription
