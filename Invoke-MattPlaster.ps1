@@ -1,27 +1,27 @@
 function Invoke-MattPlaster {
 
     <#
-.SYNOPSIS
-Module creation function
-.DESCRIPTION
-Function to automate the creation of new PowerShell modules. The module relies on Git-Scm being installed. It also replies on the Plaster and PSGitHub modules being installed from the PSGallery
-.PARAMETER GitHubUserName
-The -GitHubUserName parameter allows you to supply your GitHub username 
-.PARAMETER GitHubPath
-The -GitHubPath parameter allows you to supply the path to your GitHub folder. If the folder does not exist, You will see an error
-.PARAMETER ModuleName
-The -ModuleDescription parameter supplies the name of your new PowerShell module and GitHub repository
-.PARAMETER ModuleDescription
-The -ModuleDescription parameter supplies the description of your new PowerShell module and GitHub repository
-.EXAMPLE
-Invoke-MattPlaster -ModuleName "NameHere" -ModuleDescription "This is a module description"
-.EXAMPLE
-Invoke-MattPlaster -Name "NameHere" -Description "This is a module description"
-.EXAMPLE
-Invoke-MattPlaster -GitHubUserName YourUserNameHere -GitHubPath "C:\GitHubScripts" -ModuleName "NameHere" -ModuleDescription "This is a module description"
-.EXAMPLE
-Invoke-MattPlaster -UserName YourUserNameHere -Path "C:\GitHubScripts" -Name "NameHere" -Description "This is a module description"
-#>
+    .SYNOPSIS
+    Module creation function
+    .DESCRIPTION
+    Function to automate the creation of new PowerShell modules. The module relies on Git-Scm being installed. It also replies on the Plaster and PSGitHub modules being installed from the PSGallery
+    .PARAMETER GitHubUserName
+    The -GitHubUserName parameter allows you to supply your GitHub username 
+    .PARAMETER GitHubPath
+    The -GitHubPath parameter allows you to supply the path to your GitHub folder. If the folder does not exist, You will see an error
+    .PARAMETER ModuleName
+    The -ModuleDescription parameter supplies the name of your new PowerShell module and GitHub repository
+    .PARAMETER ModuleDescription
+    The -ModuleDescription parameter supplies the description of your new PowerShell module and GitHub repository
+    .EXAMPLE
+    Invoke-MattPlaster -ModuleName "NameHere" -ModuleDescription "This is a module description"
+    .EXAMPLE
+    Invoke-MattPlaster -Name "NameHere" -Description "This is a module description"
+    .EXAMPLE
+    Invoke-MattPlaster -GitHubUserName YourUserNameHere -GitHubPath "C:\GitHubScripts" -ModuleName "NameHere" -ModuleDescription "This is a module description"
+    .EXAMPLE
+    Invoke-MattPlaster -UserName YourUserNameHere -Path "C:\GitHubScripts" -Name "NameHere" -Description "This is a module description"
+    #>
 
     [CmdletBinding()]
     param (
