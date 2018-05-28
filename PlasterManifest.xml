@@ -20,7 +20,6 @@
     <message>
 		Creating folder structure
 		</message>
-    <file source='' destination='Docs'/>
 <file source='' destination="${PLASTER_PARAM_ModuleName}"/>
     <file source='' destination='Tests'/>
 <file source='' destination='Results'/>
