@@ -37,6 +37,7 @@ Install-Module -Name PlatyPS -Scope CurrentUser -Force -Confirm:$false
 # Import the Pester, PSScriptAnalyzer and PlatyPS
 Import-Module Pester -Force
 Import-Module PSScriptAnalyzer -Force
+Import-Module PlatyPS -Force
 
 # Creation of module path variable
 $ModulePath = $env:BUILD_DEFINITIONNAME
