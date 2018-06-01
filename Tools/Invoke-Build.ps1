@@ -27,7 +27,7 @@ $ErrorActionPreference = 'stop'
 
 # Install the Nuget package provider, Pester and PSScriptAnalyzer packages for testing
 Install-PackageProvider -Name Nuget -Scope CurrentUser -Force -Confirm:$false
-Install-Module -Name Pester -Scope CurrentUser -Force -Confirm:$false
+Install-Module -Name Pester -Scope CurrentUser -Force -SkipPublisherCheck -Confirm:$false
 Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -Confirm:$false
 Install-Module -Name PlatyPS -Scope CurrentUser -Force -Confirm:$false
 
@@ -71,8 +71,9 @@ $CoveragePercent = [math]::floor(100 - (($Script:TestResults.CodeCoverage.Number
 # Update the code coverage badge in the README.md file
 Update-CodeCoveragePercent -CodeCoverage $CoveragePercent
 
+<#
 # Creation of docs path variable
-$Docs = .\Docs
+$Docs = ".\Docs"
 
 # Creation of the output path variable
 $Output = $Docs + "\en-US\"
@@ -82,6 +83,9 @@ $ModuleFile = $ModulePath + "\" + $ModulePath + ".psm1"
 
 # Creation of $ModuleName variable
 $ModuleName = $env:BUILD_DEFINITIONNAME
+
+# Creation of PSScriptRoot variable
+$PSScriptRoot = $env:BUILD_DEFINITIONNAME
 
 # Creation and update of PlatyPS help if docs path does not exist
 if (!$Docs) {
@@ -103,3 +107,4 @@ if ($Docs) {
     # Update the help files
     Update-MarkdownHelp $Docs
 }
+#>

@@ -15,6 +15,7 @@
     <parameter name="ModuleName" type="text" prompt="Name of your module" />
     <parameter name="ModuleDesc" type="text" prompt="Brief description on this module" />
     <parameter name="Version" type="text" prompt="Initial module version" default="0.0.1" />
+    <parameter name="CompanyName" type="text" prompt="Company Name" default="Node IT Solutions Ltd." />
   </parameters>
   <content>
     <message>
@@ -46,6 +47,7 @@ moduleVersion='$PLASTER_PARAM_Version'
 rootModule='${PLASTER_PARAM_ModuleName}.psm1'
 author='$PLASTER_PARAM_FullName'
 description='$PLASTER_PARAM_ModuleDesc'
+CompanyName='$PLASTER_PARAM_CompanyName'
 encoding='UTF8-NoBOM'/>
 </content>
 </plasterManifest>

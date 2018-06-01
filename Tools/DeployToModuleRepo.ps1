@@ -37,11 +37,15 @@ else {
     Set-PSRepository -Name $FeedName -PublishLocation $PublishLocation -InstallationPolicy 'Trusted'
 }
 
+# Create the $ModulePath variable
+$ModulePath = ".\$ModuleFolderName"
+
 Write-Output '', "Publishing module."
-Publish-Module -path $(Join-Path $PSScriptRoot $ModuleFolderName) -NuGetApiKey $APIKey -Repository $FeedName -Force
+Publish-Module -path $ModulePath -NuGetApiKey $APIKey -Repository $FeedName -Force
 
 If (!$ExistingRepo) {
     Write-Output "Unregistering PS Repository"
     Unregister-PSRepository -Name $FeedName
 }
 Write-Output "Done!"
+
