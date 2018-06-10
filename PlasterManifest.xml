@@ -11,11 +11,11 @@
     <tags></tags>
   </metadata>
   <parameters>
-    <parameter name="FullName" type="text" prompt="Module author's name" default="Matt Collins" />
+    <parameter name="FullName" type="text" prompt="Module author name" default="Matt Collins" />
     <parameter name="ModuleName" type="text" prompt="Name of your module" />
     <parameter name="ModuleDesc" type="text" prompt="Brief description on this module" />
     <parameter name="Version" type="text" prompt="Initial module version" default="0.0.1" />
-    <parameter name="CompanyName" type="text" prompt="Company Name" default="Node IT Solutions Ltd." />
+    <parameter name="companyname" type="text" prompt="Company Name" default='Node IT Solutions Ltd.' />
   </parameters>
   <content>
     <message>
@@ -47,7 +47,7 @@ moduleVersion='$PLASTER_PARAM_Version'
 rootModule='${PLASTER_PARAM_ModuleName}.psm1'
 author='$PLASTER_PARAM_FullName'
 description='$PLASTER_PARAM_ModuleDesc'
-CompanyName='$PLASTER_PARAM_CompanyName'
+companyname='$PLASTER_PARAM_companyname'
 encoding='UTF8-NoBOM'/>
 </content>
 </plasterManifest>
