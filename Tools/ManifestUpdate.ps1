@@ -9,12 +9,12 @@ $Functions = @( Get-ChildItem -Path $FunctionPath\*.ps1 -ErrorAction SilentlyCon
 $ExportedFunctions = @()
 
 # Loop through all the functions and export them to a string split by commas
-Foreach ($Function in @( $Functions )) {
+foreach ($Function in @( $Functions )) {
     $FunctionString = $($Function.BaseName)
     $ExportedFunctions += $FunctionString
 }
 
-$Manifest = Import-PowerShellDataFile $ModulePath 
+$Manifest = Import-PowerShellDataFile $ModulePath
 [version]$version = $Manifest.ModuleVersion
 # Add one to the build of the version number
 [version]$NewVersion = "{0}.{1}.{2}" -f $Version.Major, $Version.Minor, ($Version.Build + 1) 
