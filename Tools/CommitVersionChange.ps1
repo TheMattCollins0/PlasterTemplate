@@ -9,7 +9,6 @@ $ReadMeUpdatePath = ".\" + "ReadMe" + ".md"
 # Git for the version number change commit back to GitHub
 git config user.email "matt.collins@node-it.com"
 git config user.name "TheMattCollins0"
-# git checkout master
 git add "$ModulePath"
 git add "$PesterResultsPath"
 git add "$PSSAResultsPath"
