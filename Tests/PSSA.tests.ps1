@@ -1,7 +1,7 @@
 Describe 'Testing against PSSA rules' {
     Context 'PSSA Standard Rules' {
-        # Creation of module pah variable
-        $ModulePath = $env:BUILD_DEFINITIONNAME
+        # Creation of module path variable
+        $ModulePath = $env:BUILD_DEFINITIONNAME + "\Output"
 
         # Populate an array containing all of the function names
         $Scripts = @( Get-ChildItem -Path $ModulePath\*.ps1 -ErrorAction SilentlyContinue )
@@ -21,6 +21,6 @@ Describe 'Testing against PSSA rules' {
                     }
                 }
             }
-        }    
+        }
     }
 }
