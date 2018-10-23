@@ -11,8 +11,6 @@ $DestinationModule = Join-Path -Path $($Module.Directory.FullName) -ChildPath ".
 $OutputManifest = Join-Path -Path $($Module.Directory.FullName) -ChildPath "..\Output\$($Module.BaseName).psd1"
 Copy-Item -Path $Module.FullName -Destination $OutputManifest -Force
 
-# $DestinationModule = "$($Module.Directory.FullName)\$($Module.BaseName).psm1"
-
 Write-Verbose -Message "Attempting to work with $DestinationModule" -verbose
 
 if (Test-Path -Path $DestinationModule ) {
