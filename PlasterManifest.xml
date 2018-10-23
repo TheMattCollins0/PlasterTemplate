@@ -18,38 +18,37 @@
     <parameter name="companyName" type="text" prompt="Company Name" default='Node IT Solutions Ltd.' />
   </parameters>
   <content>
-    <message>
-		Creating folder structure
-		</message>
-<file source='' destination="${PLASTER_PARAM_ModuleName}"/>
+        <message>
+		    Creating folder structure
+	    </message>
+    <file source='' destination="${PLASTER_PARAM_ModuleName}"/>
     <file source='' destination='Tests'/>
-<file source='' destination='Results'/>
-<file source='' destination='Tools'/>
-<file source='' destination='Docs'/>
-<file source='' destination='en-US'/>
-
-<message>
-		Deploying common files
-		</message>
-<file source='LICENSE.txt' destination=''/>
-<templateFile source='readme.md' destination=''/>
-<templateFile source='Tools\CommitVersionChange.ps1' destination=''/>
-<templateFile source='Tools\DeployToModuleRepo.ps1' destination=''/>
-<templateFile source='Tools\Invoke-Build.ps1' destination=''/>
-<templateFile source='Tools\ManifestUpdate.ps1' destination=''/>
-<templateFile source='Tests\ModuleImport.Tests.ps1' destination=''/>
-<templateFile source='Tests\PSSA.tests.ps1' destination=''/>
-<file source='module.psm1' destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psm1'/>
-<message>
-		Creating Module Manifest
-		</message>
-<newModuleManifest
-destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psd1'
-moduleVersion='$PLASTER_PARAM_Version'
-rootModule='${PLASTER_PARAM_ModuleName}.psm1'
-author='$PLASTER_PARAM_FullName'
-description='$PLASTER_PARAM_ModuleDesc'
-companyName='$PLASTER_PARAM_companyName'
-encoding='UTF8-NoBOM'/>
-</content>
+    <file source='' destination='Results'/>
+    <file source='' destination='Tools'/>
+    <file source='' destination='Docs'/>
+    <file source='' destination='en-US'/>
+        <message>
+		    Deploying common files
+	    </message>
+    <file source='LICENSE.txt' destination=''/>
+    <templateFile source='readme.md' destination=''/>
+    <templateFile source='Tools\CommitVersionChange.ps1' destination=''/>
+    <templateFile source='Tools\DeployToModuleRepo.ps1' destination=''/>
+    <templateFile source='Tools\Invoke-Build.ps1' destination=''/>
+    <templateFile source='Tools\ManifestUpdate.ps1' destination=''/>
+    <templateFile source='Tools\Invoke-Compile.ps1' destination=''/>
+    <templateFile source='Tests\ModuleImport.Tests.ps1' destination=''/>
+    <templateFile source='Tests\PSSA.tests.ps1' destination=''/>
+        <message>
+		    Creating Module Manifest
+	    </message>
+    <newModuleManifest
+    destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psd1'
+    moduleVersion='$PLASTER_PARAM_Version'
+    rootModule='${PLASTER_PARAM_ModuleName}.psm1'
+    author='$PLASTER_PARAM_FullName'
+    description='$PLASTER_PARAM_ModuleDesc'
+    companyName='$PLASTER_PARAM_companyName'
+    encoding='UTF8-NoBOM'/>
+    </content>
 </plasterManifest>
