@@ -25,6 +25,7 @@
     <file source='' destination='Tests'/>
     <file source='' destination='Results'/>
     <file source='' destination='Tools'/>
+    <file source='' destination='Output'/>
     <file source='' destination='Docs'/>
     <file source='' destination='en-US'/>
         <message>
