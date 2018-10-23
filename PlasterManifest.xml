@@ -22,6 +22,9 @@
 		    Creating folder structure
 	    </message>
     <file source='' destination="${PLASTER_PARAM_ModuleName}"/>
+    <file source='' destination="${PLASTER_PARAM_ModuleName}\Private"/>
+    <file source='' destination="${PLASTER_PARAM_ModuleName}\Public"/>
+
     <file source='' destination='Tests'/>
     <file source='' destination='Results'/>
     <file source='' destination='Tools'/>
