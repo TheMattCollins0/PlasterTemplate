@@ -1,14 +1,17 @@
 [cmdletbinding()]
 param ()
 
-$SourceFolder = ".\" + $env:BUILD_DEFINITIONNAME + "\"
+$SourceFolder = ".\Source\"
+$ModulePath = $env:BUILD_DEFINITIONNAME
 
 Write-Verbose -Message "Working in $SourceFolder" -verbose
 
 $Module = Get-ChildItem -Path $SourceFolder -Filter *.psd1 -Recurse | Select-Object -First 1
 
-$DestinationModule = Join-Path -Path $($Module.Directory.FullName) -ChildPath "..\Output\$($Module.BaseName).psm1"
-$OutputManifest = Join-Path -Path $($Module.Directory.FullName) -ChildPath "..\Output\$($Module.BaseName).psd1"
+$OutputFolder = Join-Path -Path $($Module.Directory.FullName) -ChildPath "..\$ModulePath\"
+$null = New-Item -Path $OutputFolder -ItemType Directory -Force -Confirm:$false
+$DestinationModule = Join-Path -Path $($Module.Directory.FullName) -ChildPath "..\$ModulePath\$($Module.BaseName).psm1"
+$OutputManifest = Join-Path -Path $($Module.Directory.FullName) -ChildPath "..\$ModulePath\$($Module.BaseName).psd1"
 Copy-Item -Path $Module.FullName -Destination $OutputManifest -Force
 
 Write-Verbose -Message "Attempting to work with $DestinationModule" -verbose
@@ -50,4 +53,4 @@ foreach ( $PublicFunction in $PublicFunctions ) {
 
 Write-Verbose -Message "Making $($PublicFunctionNames.Count) public functions available via Export-ModuleMember"
 
-"Export-ModuleMember -Function {0}" -f $PublicFunctionNames | Add-Content $DestinationModule
+"Export-ModuleMember -Function $($PublicFunctionNames -join ',') -Alias *" | Add-Content -Path $DestinationModule

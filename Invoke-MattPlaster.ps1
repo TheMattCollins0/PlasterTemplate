@@ -18,6 +18,14 @@ function Invoke-MattPlaster {
     .EXAMPLE
     Invoke-MattPlaster -Name "NameHere" -Description "This is a module description"
     .EXAMPLE
+    Invoke-MattPlaster -ModuleName "NameHere" -ModuleDescription "This is a module description"
+    .EXAMPLE
+    Invoke-MattPlaster -Name "NameHere" -Description "This is a module description"
+    .EXAMPLE
+    Invoke-MattPlaster -GitHubUserName YourUserNameHere -GitHubPath "C:\GitHubScripts" -ModuleName "NameHere" -ModuleDescription "This is a module description"
+    .EXAMPLE
+    Invoke-MattPlaster -UserName YourUserNameHere -Path "C:\GitHubScripts" -Name "NameHere" -Description "This is a module description"
+    .EXAMPLE
     Invoke-MattPlaster -GitHubUserName YourUserNameHere -GitHubPath "C:\GitHubScripts" -ModuleName "NameHere" -ModuleDescription "This is a module description"
     .EXAMPLE
     Invoke-MattPlaster -UserName YourUserNameHere -Path "C:\GitHubScripts" -Name "NameHere" -Description "This is a module description"
@@ -35,15 +43,13 @@ function Invoke-MattPlaster {
         [string]
         $GitHubPath = "C:\GitHub",
 
-        [Parameter(Mandatory = $true, HelpMessage = "Please enter the name of the new module",
-            ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true, HelpMessage = "Please enter the name of the new module", ValueFromPipeline = $true)]
         [ValidateNotNullOrEmpty()]
         [Alias('Name')]
         [string]
         $ModuleName,
 
-        [Parameter(Mandatory = $true, HelpMessage = "Please provide a description for the module",
-            ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true, HelpMessage = "Please provide a description for the module", ValueFromPipeline = $true)]
         [ValidateNotNullOrEmpty()]
         [Alias('Description')]
         [string]
@@ -79,7 +85,7 @@ function Invoke-MattPlaster {
     }
     Catch {
         # Launch a web browser that opens at the git-scm.com website
-        Invoke-Expression -Command 'explorer https://git-scm.com/download'
+        Start-Process 'https://git-scm.com/download'
         # Throw the script Git cannot be found in either Program Files or Program Files x86
         throw "Please ensure that both the PSGitHub and Plaster modules are installed and configured"
     }
@@ -91,10 +97,10 @@ function Invoke-MattPlaster {
     $Private = new-Object System.Management.Automation.Host.ChoiceDescription "p&Rivate", "Private"
     $RepositoryVisibilityChoices = [System.Management.Automation.Host.ChoiceDescription[]]($Public, $Private)
     $RepositoryVisibility = $host.ui.PromptForChoice( $RepositoryVisibilityCaption, $RepositoryVisibilityMessage, $RepositoryVisibilityChoices, 1 )
-    
+
     switch ( $RepositoryVisibility ) {
-        0 { "You entered Public"; break }
-        1 { "You entered Private"; break }
+        0 { Write-Information "You entered Public"; break }
+        1 { Write-Information "You entered Private"; break }
     }
 
     # Prompt for the user to confirm if they require a development branch creating on the GitHub repository
@@ -104,10 +110,10 @@ function Invoke-MattPlaster {
     $No = new-Object System.Management.Automation.Host.ChoiceDescription "&No", "No"
     $DevelopmentBranchChoices = [System.Management.Automation.Host.ChoiceDescription[]]($Yes, $No)
     $DevelopmentBranch = $host.ui.PromptForChoice( $DevelopmentBranchCaption, $DevelopmentBranchMessage, $DevelopmentBranchChoices, 0 )
-    
+
     switch ( $DevelopmentBranch ) {
-        0 { "A development branch is required"; break }
-        1 { "A development branch is not required"; break }
+        0 { Write-Information "A development branch is required"; break }
+        1 { Write-Information "A development branch is not required"; break }
     }
 
     # Set current location to the path supplied in $GitHubPath
@@ -152,7 +158,7 @@ function Invoke-MattPlaster {
     git remote add origin $GitHubRepository
 
     # Invoke Plaster using the supplied splat
-    Invoke-Plaster @PlasterSplat
+    Invoke-Plaster @PlasterSplat -Verbose
 
     # Change location to the newly created module directory
     Set-Location $Destination | Out-Null

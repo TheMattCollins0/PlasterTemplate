@@ -1,10 +1,10 @@
 Describe 'Testing against PSSA rules' {
     Context 'PSSA Standard Rules' {
         # Creation of module path variable
-        $ModulePath = $env:BUILD_DEFINITIONNAME + "\Output"
+        $ModulePath = ".\" + $env:BUILD_DEFINITIONNAME
 
         # Populate an array containing all of the function names
-        $Scripts = @( Get-ChildItem -Path $ModulePath\*.ps1 -ErrorAction SilentlyContinue )
+        $Scripts = @( Get-ChildItem -Path $ModulePath\*.psm1 -ErrorAction SilentlyContinue )
 
         # Loop to run the PSScriptAnalyser tests on all functions
         Foreach ($Script in @( $Scripts )) {

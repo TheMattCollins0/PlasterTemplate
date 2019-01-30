@@ -1,51 +1,25 @@
-<#
-function Update-CodeCoveragePercent {
-    [cmdletbinding(supportsshouldprocess)]
-    param(
-        [int]
-        $CodeCoverage = 0,
-
-        [string]
-        $TextFilePath = ".\Readme.md"
-    )
-
-    $BadgeColor = switch ($CodeCoverage) {
-        {$_ -in 90..100} { 'brightgreen' }
-        {$_ -in 75..89} { 'yellow' }
-        {$_ -in 60..74} { 'orange' }
-        default { 'red' }
-    }
-
-    if ($PSCmdlet.ShouldProcess($TextFilePath)) {
-        $ReadmeContent = (Get-Content $TextFilePath)
-        $ReadmeContent = $ReadmeContent -replace "!\[Test Coverage\].+\)", "![Test Coverage](https://img.shields.io/badge/coverage-$CodeCoverage%25-$BadgeColor.svg?maxAge=60)"
-        $ReadmeContent | Set-Content -Path $TextFilePath
-    }
-}
-#>
+[cmdletbinding()]
+param ()
 
 # Set the global Error action preference to stop
 $ErrorActionPreference = 'stop'
 
-# Install the Nuget package provider, Pester and PSScriptAnalyzer packages for testing
-Install-PackageProvider -Name Nuget -Scope CurrentUser -Force -Confirm:$false
-Install-Module -Name Pester -Scope CurrentUser -Force -SkipPublisherCheck -Confirm:$false
-Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -Confirm:$false
-Install-Module -Name PlatyPS -Scope CurrentUser -Force -Confirm:$false
+# Checking for then installing the Nuget package provider and PSDepend packages for the build environment
+$PSDependCheck = Import-Module PSDepend -ErrorAction Continue
 
-# Install third party modules required for the module
-# Install-Module -Name <MODULENAME> -Scope CurrentUser -Force -Confirm:$false
+if ( !$PSDependCheck ) {
+    Write-Verbose -Message "Installing Nuget and PSDepend"
+    Install-PackageProvider -Name Nuget -Scope CurrentUser -Force -Confirm:$false
+    Install-Module -Name PSDepend -Scope CurrentUser -Force -Confirm:$false
+}
 
-# Import the Pester, PSScriptAnalyzer and PlatyPS
-Import-Module Pester -Force
-Import-Module PSScriptAnalyzer -Force
-Import-Module PlatyPS -Force
+# Import the PSDepend module
+Write-Verbose -Message "Importing the PSDepend module"
+Import-Module PSDepend -Force
 
-# Creation of module path variable
-# $ModulePath = $env:BUILD_DEFINITIONNAME
-
-# Populate the $CodeFiles variable with the FullName of all script files within the module path
-# $CodeFiles = (Get-ChildItem $ModulePath -Recurse -Include "*.psm1", "*.ps1").FullName
+# Run Invoke-PSDepend to install or update the required modules to allow the build to run
+Write-Verbose -Message "Invoking the PSDepend module to install the required modules"
+Invoke-PSDepend -Force
 
 # Create the results folder to contain the Pester test results
 $Folder = ".\Results"
@@ -55,71 +29,56 @@ if (-not(Test-Path -Path $Folder -PathType Container)) {
 
 # Creation of result output file variables
 $PesterResultsPath = ".\" + "Results" + "\" + "PesterResults" + ".xml"
-# $PSSAResultsPath = ".\" + "Results" + "\" + "PSSAResults" + ".xml"
 
 # Run the Pester and PSScriptAnalyzer tests
 Invoke-Pester -OutputFile $PesterResultsPath -OutputFormat 'NUnitXml' -Script '.\Tests*'
-# Invoke-Pester -OutputFile $PSSAResultsPath -OutputFormat 'NUnitXml' -Script '.\Tests\PSSA.tests.ps1'
 
-<#
-# Creation of path variable
-$Path = ".\Tests"
-
-# Run the code coverage test
-$Script:TestResults = Invoke-Pester -Path $Path -CodeCoverage $CodeFiles -PassThru -OutputFormat 'NUnitXml' -OutputFile ".\Results\CodeCoverageResults.xml"
-
-# Calculate the code coverage percentage
-$CoveragePercent = [math]::floor(100 - (($Script:TestResults.CodeCoverage.NumberOfCommandsMissed / $Script:TestResults.CodeCoverage.NumberOfCommandsAnalyzed) * 100))
-
-# Update the code coverage badge in the README.md file
-Update-CodeCoveragePercent -CodeCoverage $CoveragePercent
-#>
-<#
+## Section for documentation updates
 # Creation of docs path variable
 $Docs = ".\Docs"
 
 # Creation of the output path variable
-$Output = .\en-US"
-
-# Module file path variable
-$ModuleFile = $ModulePath + "\" + $ModulePath + ".psm1"
+$Output = ".\en-US"
 
 # Creation of $ModuleName variable
 $ModuleName = $env:BUILD_DEFINITIONNAME
 
-# Creation of PSScriptRoot variable
-$PSScriptRoot = $env:BUILD_DEFINITIONNAME
+# Module file path variable
+$ModuleFile = ".\" + $ModuleName
 
 # Creation and update of PlatyPS help if docs path does not exist
-if (!$Docs) {
+$DocsPathTest = Test-Path -Path $Docs -PathType Container
 
-    # Creation of the Docs path
+if ( !$DocsPathTest ) {
+
+    # Create the docs folder
     if (-not(Test-Path -Path $Docs -PathType Container)) {
-    New-Item -Path $Docs -ItemType Directory | Out-Null
+        New-Item -Path $Docs -ItemType Directory | Out-Null
+    }
+
+    # Create the output folder
+    if (-not(Test-Path -Path $Output -PathType Container)) {
+        New-Item -Path $Output -ItemType Directory | Out-Null
     }
 
     # Import the module
     Import-Module $ModuleFile
 
     # Create the new markdown help
-    New-MarkdownHelp -Module $ModuleName -OutputFolder .\docs
-
-    # Creation of the en-US External help path
-    if (-not(Test-Path -Path $Output -PathType Container)) {
-    New-Item -Path $Output -ItemType Directory | Out-Null
-    }
+    New-MarkdownHelp -Module $ModuleName -OutputFolder $Docs -Force
 
     # Create the external help
-    New-ExternalHelp $Docs -OutputPath $Output
+    New-ExternalHelp -Path $Docs -OutputPath $Output -Force
 }
 
 # Update of PlatyPS help of the docs path does exist
-if ($Docs) {
+if ( $DocsPathTest ) {
     # Import the PowerShell module
-    Import-Module $ModuleName -Force
+    Import-Module $ModuleFile
 
     # Update the help files
-    Update-MarkdownHelp $Docs
-}
-#>
+    New-MarkdownHelp -Module $ModuleName -OutputFolder $Docs -Force
 
+    # Update the external help
+    New-ExternalHelp -Path $Docs -OutputPath $Output -Force
+}

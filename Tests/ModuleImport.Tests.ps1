@@ -2,8 +2,7 @@
 
 #region variables
 
-# $ModulePath = Join-Path $env:BUILD_SOURCESDIRECTORY $env:BUILD_DEFINITIONNAME
-$ModulePath = $env:BUILD_DEFINITIONNAME + "\Output"
+$ModulePath = ".\" + $env:BUILD_DEFINITIONNAME
 
 #endregion
 Write-output "Module Path: '$ModulePath'"

@@ -21,14 +21,12 @@
         <message>
 		    Creating folder structure
 	    </message>
-    <file source='' destination="${PLASTER_PARAM_ModuleName}"/>
-    <file source='' destination="${PLASTER_PARAM_ModuleName}\Private"/>
-    <file source='' destination="${PLASTER_PARAM_ModuleName}\Public"/>
-
+    <file source='' destination="Source"/>
+    <file source='' destination="Source\Private"/>
+    <file source='' destination="Source\Public"/>
     <file source='' destination='Tests'/>
     <file source='' destination='Results'/>
     <file source='' destination='Tools'/>
-    <file source='' destination='Output'/>
     <file source='' destination='Docs'/>
     <file source='' destination='en-US'/>
         <message>
@@ -41,13 +39,14 @@
     <templateFile source='Tools\Invoke-Build.ps1' destination=''/>
     <templateFile source='Tools\ManifestUpdate.ps1' destination=''/>
     <templateFile source='Tools\Invoke-Compile.ps1' destination=''/>
+    <templateFile source='Tools\Template.depend.psd1' destination='Tools\${PLASTER_PARAM_ModuleName}.depend.psd1'/>
     <templateFile source='Tests\ModuleImport.Tests.ps1' destination=''/>
     <templateFile source='Tests\PSSA.tests.ps1' destination=''/>
         <message>
 		    Creating Module Manifest
 	    </message>
     <newModuleManifest
-    destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psd1'
+    destination='Source\${PLASTER_PARAM_ModuleName}.psd1'
     moduleVersion='$PLASTER_PARAM_Version'
     rootModule='${PLASTER_PARAM_ModuleName}.psm1'
     author='$PLASTER_PARAM_FullName'
