@@ -29,6 +29,8 @@
     <file source='' destination='Tools'/>
     <file source='' destination='Docs'/>
     <file source='' destination='en-US'/>
+    <file source='' destination='.vscode'/>
+
         <message>
 		    Deploying common files
 	    </message>
@@ -42,6 +44,9 @@
     <templateFile source='Tools\Template.depend.psd1' destination='Tools\${PLASTER_PARAM_ModuleName}.depend.psd1'/>
     <templateFile source='Tests\ModuleImport.Tests.ps1' destination=''/>
     <templateFile source='Tests\PSSA.tests.ps1' destination=''/>
+    <templateFile source='.vscode\launch.json' ndestination=''/>
+    <templateFile source='.vscode\tasks.json' destination=''/>
+
         <message>
 		    Creating Module Manifest
 	    </message>
