@@ -2,15 +2,19 @@
 param ()
 
 # Set the global Error action preference to stop
-$ErrorActionPreference = 'stop'
+# $ErrorActionPreference = 'stop'
+
+$env:PSModulePath
+$env:PSModulePath = $env:PSModulePath + ";C:\Windows\ServiceProfiles\NetworkService\Documents\WindowsPowerShell\Modules\"
+$env:PSModulePath
 
 # Checking for then installing the Nuget package provider and PSDepend packages for the build environment
 $PSDependCheck = Import-Module PSDepend -ErrorAction SilentlyContinue
 
 if ( !$PSDependCheck ) {
     Write-Verbose -Message "Installing Nuget and PSDepend"
-    Install-PackageProvider -Name Nuget -Scope CurrentUser -Force -Confirm:$false
-    Install-Module -Name PSDepend -Scope CurrentUser -Force -Confirm:$false
+    Install-PackageProvider -Name Nuget -Scope CurrentUser -Force
+    Install-Module -Name PSDepend -Scope CurrentUser -Force
 }
 
 # Import the PSDepend module
