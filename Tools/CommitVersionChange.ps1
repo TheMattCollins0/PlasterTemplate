@@ -22,3 +22,4 @@ git add "$DocsPath"
 git add "$enUSPath"
 git commit -m "Updated Version Number ***NO_CI***"
 git push origin HEAD:master
+

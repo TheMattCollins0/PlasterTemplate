@@ -22,7 +22,7 @@ Write-Verbose -Message "Importing the PSDepend module"
 Import-Module PSDepend -Force
 
 # Run Invoke-PSDepend to install or update the required modules to allow the build to run
-Write-Verbose -Message "Invoking the PSDepend module to install the required modules"
+Write-Verbose -Message "Invoking PSDepend to install the required modules"
 Invoke-PSDepend -Force
 
 # Create the results folder to contain the Pester test results
