@@ -10,7 +10,7 @@
             Repository         = 'PSGallery'
             SkipPublisherCheck = $true
         }
-        Version        = 'latest'
+        Version        = '4.10.1'
     }
 
     PSScriptAnalyzerInstall = @{
@@ -22,6 +22,6 @@
         }
         Version        = '1.18.0'
     }
-    
+
     PlatyPS          = 'latest'
 }
