@@ -171,7 +171,16 @@ function Invoke-MattPlaster {
     }
 
     # Creation of the GitHub repository URL variable
-    $GitHubRepository = 'https://github.com/' + $GitHubUsername + '/' + $ModuleName + '.git'
+    if ( $NodeOrPersonal -eq "0" ) {
+
+        $GitHubRepository = 'https://github.com/' + $GitHubUsername + '/' + $ModuleName + '.git'
+
+    }
+    elseif ( $NodeOrPersonal -eq '1' ) {
+
+        $GitHubRepository = 'https://github.com/NodeITSolutionsLtd/' + $ModuleName + '.git'
+
+    }
 
     # Clone the GitHub repository to the local computer to the GitHub directory
     git clone $GitHubRepository
